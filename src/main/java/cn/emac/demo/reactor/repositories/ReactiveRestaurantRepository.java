@@ -27,7 +27,7 @@ public class ReactiveRestaurantRepository {
     private MongoCollection<Document> collection;
 
     private ReactiveRestaurantRepository() {
-        collection = MongoClients.create().getDatabase("test").getCollection("restaurant");
+        collection = MongoClients.create("mongodb://localhost:27017/?maxPoolSize=20").getDatabase("test").getCollection("restaurant");
     }
 
     public Flux<Success> insert(List<Restaurant> restaurants) {

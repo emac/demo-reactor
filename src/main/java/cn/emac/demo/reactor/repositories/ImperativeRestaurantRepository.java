@@ -3,6 +3,7 @@ package cn.emac.demo.reactor.repositories;
 import cn.emac.demo.reactor.domain.Restaurant;
 import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,8 @@ public class ImperativeRestaurantRepository {
     private MongoCollection<Document> collection;
 
     private ImperativeRestaurantRepository() {
-        collection = new MongoClient().getDatabase("test").getCollection("restaurant");
+        MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(20).build();
+        collection = new MongoClient("localhost", options).getDatabase("test").getCollection("restaurant");
     }
 
     public void deleteAll() {
